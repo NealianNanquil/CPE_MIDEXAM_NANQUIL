@@ -1,0 +1,69 @@
+  - name: Create directory
+    file:
+      path: /data
+      state: directory
+      mode: 0777
+
+  - name: Install Kibana
+    get_url:
+      url: https://artifacts.elastic.co/downloads/kibana/kibana-6.8.15-linux-x86_64.tar.gz
+      dest: /data/kibana-6.8.15-linux-x86_64.tar.gz
+      mode: 0755
+
+  - name: Extract Kibana
+    unarchive:
+      src: /data/kibana-6.8.15-linux-x86_64.tar.gz
+      dest: /data/
+      remote_src: yes
+      creates: /data/kibana-6.8.15-linux-x86_64/config/kibana.yml
+
+  - name: Insert Kibana unit file
+    template:
+      src: kibana.yml.j2
+      dest: /etc/systemd/system/kibana.service
+      mode: 0644
+
+  - name: Insert config template
+    template:
+      src: kibana.yml.j2
+      dest: /data/kibana-6.8.15-linux-x86_64/config/kibana.yml
+      mode: 0660
+
+  - name: Reload the Daemon
+    systemd:
+      daemon_reload: yes
+
+  - name: Create directory
+    file:
+      path: /data
+      state: directory
+      mode: 0777
+
+  - name: Install Kibana
+    get_url:
+      url: https://artifacts.elastic.co/downloads/kibana/kibana-6.8.15-linux-x86_64.tar.gz
+      dest: /data/kibana-6.8.15-linux-x86_64.tar.gz
+      mode: 0755
+
+  - name: Extract Kibana
+    unarchive:
+      src: /data/kibana-6.8.15-linux-x86_64.tar.gz
+      dest: /data/
+      remote_src: yes
+      creates: /data/kibana-6.8.15-linux-x86_64/config/kibana.yml
+
+  - name: Insert Kibana unit file
+    template:
+      src: kibana.yml.j2
+      dest: /etc/systemd/system/kibana.service
+      mode: 0644
+
+  - name: Insert config template
+    template:
+      src: kibana.yml.j2
+      dest: /data/kibana-6.8.15-linux-x86_64/config/kibana.yml
+      mode: 0660
+
+  - name: Reload the Daemon
+    systemd:
+      daemon_reload: yes
